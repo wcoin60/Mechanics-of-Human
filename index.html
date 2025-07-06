@@ -1,714 +1,731 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mechanics of Human</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mechanics of Human</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #333;
-        line-height: 1.6;
-      }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-      }
+    .dark-mode {
+      background: #000 !important;
+      color: #fff !important;
+    }
 
-      header {
-        text-align: center;
-        margin-bottom: 40px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 40px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
+    .dark-mode header,
+    .dark-mode .featured-concepts,
+    .dark-mode .search-section,
+    .dark-mode .interactive-section,
+    .dark-mode footer {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+    }
 
-      h1 {
-        font-size: 3rem;
-        color: white;
-        margin-bottom: 10px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-      .subtitle {
-        font-size: 1.2rem;
-        color: rgba(255, 255, 255, 0.9);
-        margin-bottom: 20px;
-      }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-      .hero-description {
-        font-size: 1.1rem;
-        color: rgba(255, 255, 255, 0.8);
-        max-width: 800px;
-        margin: 0 auto;
-      }
+    h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
 
+    .subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 20px;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Dark mode toggle button */
+    #toggleDarkBtn {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      cursor: pointer;
+      margin: 20px auto;
+      display: block;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+    #toggleDarkBtn:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Search section */
+    .search-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      text-align: center;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .search-input {
+      width: 100%;
+      max-width: 500px;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      transition: box-shadow 0.3s ease;
+    }
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Newsletter / featured concepts */
+    .featured-concepts {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .featured-title {
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Categories grid */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .category-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      user-select: none;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+    .category-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #2c3e50;
+      text-align: center;
+    }
+    .category-description {
+      color: #555;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .topics-list {
+      list-style: none;
+      padding: 0;
+    }
+    .topics-list li {
+      background: rgba(103, 126, 234, 0.1);
+      margin: 8px 0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border-left: 4px solid #677eea;
+      transition: all 0.3s ease;
+    }
+    .topics-list li:hover {
+      background: rgba(103, 126, 234, 0.2);
+      transform: translateX(5px);
+    }
+
+    /* Featured mechanical concepts grid */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .concept-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .concept-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    .concept-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    .concept-name {
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    .concept-description {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* Interactive learning tools */
+    .interactive-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      text-align: center;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .interactive-title {
+      color: white;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .demo-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .demo-button {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      user-select: none;
+    }
+    .demo-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .demo-area {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+      font-family: monospace, monospace;
+      white-space: pre-line;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      padding: 40px 0;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      transition: background 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+
+    /* Interactive SVG human body */
+    #bodyInfo {
+      margin-top: 20px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      user-select: none;
+    }
+    svg g {
+      cursor: pointer;
+      transition: fill 0.3s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
       .categories {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 30px;
-        margin-bottom: 40px;
+        grid-template-columns: 1fr;
       }
-
-      .category-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        cursor: pointer;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .category-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-      }
-
-      .category-icon {
-        font-size: 3rem;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-
-      .category-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 15px;
-        color: #2c3e50;
-        text-align: center;
-      }
-
-      .category-description {
-        color: #555;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-
-      .topics-list {
-        list-style: none;
-        padding: 0;
-      }
-
-      .topics-list li {
-        background: rgba(103, 126, 234, 0.1);
-        margin: 8px 0;
-        padding: 10px 15px;
-        border-radius: 8px;
-        border-left: 4px solid #677eea;
-        transition: all 0.3s ease;
-      }
-
-      .topics-list li:hover {
-        background: rgba(103, 126, 234, 0.2);
-        transform: translateX(5px);
-      }
-
-      .search-section {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 30px;
-        margin-bottom: 40px;
-        text-align: center;
-      }
-
-      .search-input {
-        width: 100%;
-        max-width: 500px;
-        padding: 15px 20px;
-        border: none;
-        border-radius: 30px;
-        font-size: 1.1rem;
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-      }
-
-      .search-input:focus {
-        outline: none;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-      }
-
-      .featured-concepts {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 30px;
-        margin-bottom: 40px;
-      }
-
-      .featured-title {
-        color: white;
+      h1 {
         font-size: 2rem;
-        text-align: center;
-        margin-bottom: 30px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
       }
-
-      .concept-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-      }
-
-      .concept-card {
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 12px;
-        padding: 20px;
-        text-align: center;
-        transition: all 0.3s ease;
-        cursor: pointer;
-      }
-
-      .concept-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      }
-
-      .concept-emoji {
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-      }
-
-      .concept-name {
-        font-weight: bold;
-        color: #2c3e50;
-        margin-bottom: 10px;
-      }
-
-      .concept-description {
-        font-size: 0.9rem;
-        color: #666;
-      }
-
-      .interactive-section {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 30px;
-        margin-bottom: 40px;
-        text-align: center;
-      }
-
-      .interactive-title {
-        color: white;
-        font-size: 2rem;
-        margin-bottom: 20px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
       .demo-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
-      }
-
-      .demo-button {
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 30px;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      .demo-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      }
-
-      .demo-area {
-        margin-top: 30px;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 15px;
-        min-height: 200px;
-        display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.1rem;
       }
+    }
+  </style>
+</head>
+<body>
 
-      footer {
-        text-align: center;
-        color: rgba(255, 255, 255, 0.8);
-        padding: 40px 0;
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
-      }
+  <div class="container">
 
-      @media (max-width: 768px) {
-        .categories {
-          grid-template-columns: 1fr;
-        }
+    <!-- Dark Mode Toggle Button -->
+    <button id="toggleDarkBtn">🌙 Toggle Dark Mode</button>
 
-        h1 {
-          font-size: 2rem;
-        }
-
-        .demo-buttons {
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>⚙️ Mechanics of Human</h1>
-        <div class="subtitle">Where Engineering Meets Biology</div>
-        <div class="hero-description">
-          Explore the fascinating intersection of mechanical principles and
-          human anatomy. Discover how the human body operates as a complex
-          biomechanical system, from the lever systems in our joints to the
-          fluid dynamics of blood flow.
-        </div>
-      </header>
-
-      <div class="search-section">
-        <input
-          type="text"
-          class="search-input"
-          placeholder="Search concepts, mechanisms, or body systems..."
-          id="searchInput"
-        />
-        <div style="margin-top: 15px">
-          <a
-            href="mailto:info@mechanicsofhuman.com"
-            style="
-              color: white;
-              text-decoration: none;
-              background: rgba(255, 255, 255, 0.2);
-              padding: 10px 20px;
-              border-radius: 20px;
-              margin: 0 10px;
-            "
-            >📧 Contact Us</a
-          >
-          <a
-            href="#newsletter"
-            style="
-              color: white;
-              text-decoration: none;
-              background: rgba(255, 255, 255, 0.2);
-              padding: 10px 20px;
-              border-radius: 20px;
-              margin: 0 10px;
-            "
-            >📬 Newsletter</a
-          >
-        </div>
+    <header>
+      <h1>⚙️ Mechanics of Human</h1>
+      <div class="subtitle">Where Engineering Meets Biology</div>
+      <div class="hero-description">
+        Explore the fascinating intersection of mechanical principles and
+        human anatomy. Discover how the human body operates as a complex
+        biomechanical system, from the lever systems in our joints to the
+        fluid dynamics of blood flow.
       </div>
+    </header>
 
-      <!-- Email Collection Section -->
-      <div class="featured-concepts" id="newsletter">
-        <div class="featured-title">🚀 Be the First to Know!</div>
-        <div style="max-width: 600px; margin: 0 auto; text-align: center">
-          <p
-            style="
-              color: rgba(255, 255, 255, 0.9);
-              font-size: 1.1rem;
-              margin-bottom: 25px;
-            "
-          >
-            Join our community of engineers, medical professionals, and curious
-            minds exploring the mechanics of human biology!
-          </p>
-          <form
-            id="emailForm"
-            style="
-              display: flex;
-              gap: 15px;
-              flex-wrap: wrap;
-              justify-content: center;
-            "
-          >
-            <input
-              type="email"
-              id="emailInput"
-              placeholder="Enter your email address"
-              style="
-                flex: 1;
-                min-width: 250px;
-                padding: 15px 20px;
-                border: none;
-                border-radius: 30px;
-                font-size: 1rem;
-              "
-            />
-            <button
-              type="submit"
-              style="
-                background: linear-gradient(45deg, #667eea, #764ba2);
-                color: white;
-                border: none;
-                padding: 15px 30px;
-                border-radius: 30px;
-                font-size: 1rem;
-                cursor: pointer;
-              "
-            >
-              Subscribe Free
-            </button>
-          </form>
-          <p
-            style="
-              color: rgba(255, 255, 255, 0.7);
-              font-size: 0.9rem;
-              margin-top: 15px;
-            "
-          >
-            ✓ Free updates ✓ Exclusive content ✓ No spam ever
-          </p>
-        </div>
+    <div class="search-section">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search concepts, mechanisms, or body systems..."
+        id="searchInput"
+      />
+      <div style="margin-top: 15px;">
+        <a href="mailto:info@mechanicsofhuman.com" style="
+          color: white;
+          text-decoration: none;
+          background: rgba(255, 255, 255, 0.2);
+          padding: 10px 20px;
+          border-radius: 20px;
+          margin: 0 10px;
+        ">📧 Contact Us</a>
+        <a href="#newsletter" style="
+          color: white;
+          text-decoration: none;
+          background: rgba(255, 255, 255, 0.2);
+          padding: 10px 20px;
+          border-radius: 20px;
+          margin: 0 10px;
+        ">📬 Newsletter</a>
       </div>
-
-      <div class="categories">
-        <div class="category-card" onclick="expandCategory('musculoskeletal')">
-          <div class="category-icon">🦴</div>
-          <div class="category-title">Musculoskeletal Mechanics</div>
-          <div class="category-description">
-            Explore how bones, muscles, and joints work as mechanical systems
-          </div>
-          <ul class="topics-list">
-            <li>Lever Systems in Human Joints</li>
-            <li>Bone as Composite Material</li>
-            <li>Muscle Contraction Mechanics</li>
-            <li>Joint Biomechanics</li>
-            <li>Gait Analysis</li>
-          </ul>
-        </div>
-
-        <div class="category-card" onclick="expandCategory('cardiovascular')">
-          <div class="category-icon">❤️</div>
-          <div class="category-title">Cardiovascular Fluid Dynamics</div>
-          <div class="category-description">
-            Understanding blood flow as fluid mechanics in biological systems
-          </div>
-          <ul class="topics-list">
-            <li>Heart as Mechanical Pump</li>
-            <li>Blood Flow Dynamics</li>
-            <li>Pressure Systems</li>
-            <li>Valve Mechanics</li>
-            <li>Vascular Resistance</li>
-          </ul>
-        </div>
-
-        <div class="category-card" onclick="expandCategory('respiratory')">
-          <div class="category-icon">🫁</div>
-          <div class="category-title">Respiratory Mechanics</div>
-          <div class="category-description">
-            Air flow, pressure differentials, and breathing mechanics
-          </div>
-          <ul class="topics-list">
-            <li>Lung Ventilation Mechanics</li>
-            <li>Pressure-Volume Relationships</li>
-            <li>Diaphragm Function</li>
-            <li>Gas Exchange Principles</li>
-            <li>Respiratory Compliance</li>
-          </ul>
-        </div>
-
-        <div class="category-card" onclick="expandCategory('nervous')">
-          <div class="category-icon">🧠</div>
-          <div class="category-title">Neural Control Systems</div>
-          <div class="category-description">
-            The nervous system as biological control and feedback mechanisms
-          </div>
-          <ul class="topics-list">
-            <li>Motor Control Systems</li>
-            <li>Feedback Mechanisms</li>
-            <li>Signal Processing</li>
-            <li>Reflex Arcs</li>
-            <li>Neural Networks</li>
-          </ul>
-        </div>
-
-        <div class="category-card" onclick="expandCategory('cellular')">
-          <div class="category-icon">🔬</div>
-          <div class="category-title">Cellular Mechanics</div>
-          <div class="category-description">
-            Mechanical properties and processes at the cellular level
-          </div>
-          <ul class="topics-list">
-            <li>Cell Membrane Mechanics</li>
-            <li>Cytoskeletal Structure</li>
-            <li>Molecular Motors</li>
-            <li>Mechanotransduction</li>
-            <li>Tissue Mechanics</li>
-          </ul>
-        </div>
-
-        <div class="category-card" onclick="expandCategory('movement')">
-          <div class="category-icon">🏃</div>
-          <div class="category-title">Human Movement Analysis</div>
-          <div class="category-description">
-            Biomechanical analysis of human motion and performance
-          </div>
-          <ul class="topics-list">
-            <li>Kinematic Analysis</li>
-            <li>Force Production</li>
-            <li>Balance and Stability</li>
-            <li>Motion Optimization</li>
-            <li>Sports Biomechanics</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="featured-concepts">
-        <div class="featured-title">Featured Mechanical Concepts</div>
-        <div class="concept-grid">
-          <div class="concept-card" onclick="showConcept('leverage')">
-            <div class="concept-emoji">⚖️</div>
-            <div class="concept-name">Biological Leverage</div>
-            <div class="concept-description">
-              How bones and muscles create mechanical advantage
-            </div>
-          </div>
-          <div class="concept-card" onclick="showConcept('pump')">
-            <div class="concept-emoji">🔄</div>
-            <div class="concept-name">Hydraulic Systems</div>
-            <div class="concept-description">
-              Heart and circulation as fluid mechanics
-            </div>
-          </div>
-          <div class="concept-card" onclick="showConcept('springs')">
-            <div class="concept-emoji">🌀</div>
-            <div class="concept-name">Elastic Energy Storage</div>
-            <div class="concept-description">
-              Tendons and ligaments as biological springs
-            </div>
-          </div>
-          <div class="concept-card" onclick="showConcept('bellows')">
-            <div class="concept-emoji">🎈</div>
-            <div class="concept-name">Pneumatic Systems</div>
-            <div class="concept-description">
-              Respiratory mechanics and pressure systems
-            </div>
-          </div>
-          <div class="concept-card" onclick="showConcept('sensors')">
-            <div class="concept-emoji">📡</div>
-            <div class="concept-name">Feedback Control</div>
-            <div class="concept-description">
-              Neural control systems and homeostasis
-            </div>
-          </div>
-          <div class="concept-card" onclick="showConcept('materials')">
-            <div class="concept-emoji">🧱</div>
-            <div class="concept-name">Composite Materials</div>
-            <div class="concept-description">
-              Bone structure and tissue engineering
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="interactive-section">
-        <div class="interactive-title">Interactive Learning Tools</div>
-        <div class="demo-buttons">
-          <button class="demo-button" onclick="showDemo('lever')">
-            Joint Lever Demo
-          </button>
-          <button class="demo-button" onclick="showDemo('flow')">
-            Blood Flow Simulator
-          </button>
-          <button class="demo-button" onclick="showDemo('breathing')">
-            Breathing Mechanics
-          </button>
-          <button class="demo-button" onclick="showDemo('gait')">
-            Gait Analysis
-          </button>
-        </div>
-        <div class="demo-area" id="demoArea">
-          Select a demo above to explore interactive mechanical concepts!
-        </div>
-      </div>
-
-      <footer>
-        <p>
-          &copy; 2025 Mechanics of Human Portal | Bridging Engineering and
-          Biology
-        </p>
-        <p>Explore • Learn • Discover • Apply</p>
-      </footer>
     </div>
 
-    <script>
-      function expandCategory(category) {
-        const categories = {
-          musculoskeletal:
-            'Diving deep into how the human body uses mechanical principles like levers, pulleys, and structural engineering. Our bones act as rigid structures, muscles as actuators, and joints as pivot points.',
-          cardiovascular:
-            'The heart operates as a sophisticated dual-pump system, with blood vessels forming a complex network of pipes with varying resistance and compliance.',
-          respiratory:
-            'Breathing involves pressure differentials, elastic recoil, and gas exchange across membranes - all fundamental mechanical and thermodynamic principles.',
-          nervous:
-            'The nervous system functions as a biological control system with sensors, processors, and actuators, maintaining homeostasis through feedback loops.',
-          cellular:
-            'At the microscopic level, cells exhibit mechanical properties including elasticity, viscosity, and active force generation through molecular motors.',
-          movement:
-            'Human movement can be analyzed using principles of kinematics, kinetics, and optimization theory to understand efficiency and performance.',
-        };
+    <!-- Newsletter / Email Collection -->
+    <div class="featured-concepts" id="newsletter">
+      <div class="featured-title">🚀 Be the First to Know!</div>
+      <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+        <p style="
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 1.1rem;
+          margin-bottom: 25px;
+        ">
+          Join our community of engineers, medical professionals, and curious
+          minds exploring the mechanics of human biology!
+        </p>
+        <form id="emailForm" style="
+          display: flex;
+          gap: 15px;
+          flex-wrap: wrap;
+          justify-content: center;
+        ">
+          <input
+            type="email"
+            id="emailInput"
+            placeholder="Enter your email address"
+            required
+            style="
+              flex: 1;
+              min-width: 250px;
+              padding: 15px 20px;
+              border: none;
+              border-radius: 30px;
+              font-size: 1rem;
+            "
+          />
+          <button
+            type="submit"
+            style="
+              background: linear-gradient(45deg, #667eea, #764ba2);
+              color: white;
+              border: none;
+              padding: 15px 30px;
+              border-radius: 30px;
+              font-size: 1rem;
+              cursor: pointer;
+            "
+          >
+            Subscribe Free
+          </button>
+        </form>
+        <p style="
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.9rem;
+          margin-top: 15px;
+        ">
+          ✓ Free updates ✓ Exclusive content ✓ No spam ever
+        </p>
+      </div>
+    </div>
 
-        alert(
-          `${
-            category.charAt(0).toUpperCase() + category.slice(1)
-          } Mechanics:\n\n${categories[category]}`
-        );
+    <!-- Categories -->
+    <div class="categories">
+      <div class="category-card" onclick="expandCategory('musculoskeletal')">
+        <div class="category-icon">🦴</div>
+        <div class="category-title">Musculoskeletal Mechanics</div>
+        <div class="category-description">
+          Explore how bones, muscles, and joints work as mechanical systems
+        </div>
+        <ul class="topics-list">
+          <li>Lever Systems in Human Joints</li>
+          <li>Bone as Composite Material</li>
+          <li>Muscle Contraction Mechanics</li>
+          <li>Joint Biomechanics</li>
+          <li>Gait Analysis</li>
+        </ul>
+      </div>
+
+      <div class="category-card" onclick="expandCategory('cardiovascular')">
+        <div class="category-icon">❤️</div>
+        <div class="category-title">Cardiovascular Fluid Dynamics</div>
+        <div class="category-description">
+          Understanding blood flow as fluid mechanics in biological systems
+        </div>
+        <ul class="topics-list">
+          <li>Heart as Mechanical Pump</li>
+          <li>Blood Flow Dynamics</li>
+          <li>Pressure Systems</li>
+          <li>Valve Mechanics</li>
+          <li>Vascular Resistance</li>
+        </ul>
+      </div>
+
+      <div class="category-card" onclick="expandCategory('respiratory')">
+        <div class="category-icon">🫁</div>
+        <div class="category-title">Respiratory Mechanics</div>
+        <div class="category-description">
+          Air flow, pressure differentials, and breathing mechanics
+        </div>
+        <ul class="topics-list">
+          <li>Lung Ventilation Mechanics</li>
+          <li>Pressure-Volume Relationships</li>
+          <li>Diaphragm Function</li>
+          <li>Gas Exchange Principles</li>
+          <li>Respiratory Compliance</li>
+        </ul>
+      </div>
+
+      <div class="category-card" onclick="expandCategory('nervous')">
+        <div class="category-icon">🧠</div>
+        <div class="category-title">Neural Control Systems</div>
+        <div class="category-description">
+          The nervous system as biological control and feedback mechanisms
+        </div>
+        <ul class="topics-list">
+          <li>Motor Control Systems</li>
+          <li>Feedback Mechanisms</li>
+          <li>Signal Processing</li>
+          <li>Reflex Arcs</li>
+          <li>Neural Networks</li>
+        </ul>
+      </div>
+
+      <div class="category-card" onclick="expandCategory('cellular')">
+        <div class="category-icon">🔬</div>
+        <div class="category-title">Cellular Mechanics</div>
+        <div class="category-description">
+          Mechanical properties and processes at the cellular level
+        </div>
+        <ul class="topics-list">
+          <li>Cell Membrane Mechanics</li>
+          <li>Cytoskeletal Structure</li>
+          <li>Molecular Motors</li>
+          <li>Mechanotransduction</li>
+          <li>Tissue Mechanics</li>
+        </ul>
+      </div>
+
+      <div class="category-card" onclick="expandCategory('movement')">
+        <div class="category-icon">🏃</div>
+        <div class="category-title">Human Movement Analysis</div>
+        <div class="category-description">
+          Biomechanical analysis of human motion and performance
+        </div>
+        <ul class="topics-list">
+          <li>Kinematic Analysis</li>
+          <li>Force Production</li>
+          <li>Balance and Stability</li>
+          <li>Motion Optimization</li>
+          <li>Sports Biomechanics</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Featured Mechanical Concepts -->
+    <div class="featured-concepts">
+      <div class="featured-title">🛠️ Featured Mechanical Concepts</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="concept-emoji">⚖️</div>
+          <div class="concept-name">Levers</div>
+          <div class="concept-description">
+            Bones and muscles act as lever systems to create movement.
+          </div>
+        </div>
+        <div class="concept-card">
+          <div class="concept-emoji">💧</div>
+          <div class="concept-name">Fluid Mechanics</div>
+          <div class="concept-description">
+            Blood flow and respiration are governed by fluid dynamics.
+          </div>
+        </div>
+        <div class="concept-card">
+          <div class="concept-emoji">🔩</div>
+          <div class="concept-name">Joints & Bearings</div>
+          <div class="concept-description">
+            Synovial joints function as mechanical bearings.
+          </div>
+        </div>
+        <div class="concept-card">
+          <div class="concept-emoji">🦾</div>
+          <div class="concept-name">Muscle Mechanics</div>
+          <div class="concept-description">
+            Muscles generate force via contraction mechanics.
+          </div>
+        </div>
+        <div class="concept-card">
+          <div class="concept-emoji">📐</div>
+          <div class="concept-name">Torque & Force</div>
+          <div class="concept-description">
+            Joint moments create rotational motion.
+          </div>
+        </div>
+        <div class="concept-card">
+          <div class="concept-emoji">🔄</div>
+          <div class="concept-name">Feedback Systems</div>
+          <div class="concept-description">
+            Nervous system controls motor responses.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Human Body Diagram -->
+    <div class="interactive-section">
+      <div class="interactive-title">🧬 Interactive Human Body Diagram</div>
+      <div style="display: flex; justify-content: center;">
+        <svg
+          viewBox="0 0 200 500"
+          width="200"
+          id="bodySVG"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Interactive human body diagram"
+        >
+          <g id="head" fill="gray">
+            <circle cx="100" cy="50" r="30" />
+          </g>
+          <g id="chest" fill="gray">
+            <rect x="70" y="90" width="60" height="100" />
+          </g>
+          <g id="abdomen" fill="gray">
+            <rect x="70" y="190" width="60" height="80" />
+          </g>
+          <g id="leftArm" fill="gray">
+            <rect x="30" y="90" width="30" height="120" />
+          </g>
+          <g id="rightArm" fill="gray">
+            <rect x="140" y="90" width="30" height="120" />
+          </g>
+          <g id="leftLeg" fill="gray">
+            <rect x="70" y="270" width="30" height="160" />
+          </g>
+          <g id="rightLeg" fill="gray">
+            <rect x="100" y="270" width="30" height="160" />
+          </g>
+        </svg>
+      </div>
+      <div id="bodyInfo">Click on a body part to learn more!</div>
+    </div>
+
+    <!-- Interactive learning tools -->
+    <div class="interactive-section">
+      <div class="interactive-title">🧰 Interactive Learning Tools</div>
+      <div class="demo-buttons">
+        <button
+          class="demo-button"
+          onclick="showDemo('leverDemo')"
+          aria-label="Show lever system demonstration"
+        >
+          ⚖️ Lever System Demo
+        </button>
+        <button
+          class="demo-button"
+          onclick="showDemo('fluidDemo')"
+          aria-label="Show fluid dynamics demonstration"
+        >
+          💧 Fluid Dynamics Demo
+        </button>
+        <button
+          class="demo-button"
+          onclick="showDemo('jointDemo')"
+          aria-label="Show joint mechanics demonstration"
+        >
+          🔩 Joint Mechanics Demo
+        </button>
+      </div>
+      <div id="demoArea" class="demo-area" aria-live="polite" aria-atomic="true">
+        Select a demo above to see it here.
+      </div>
+    </div>
+
+    <footer>
+      &copy; 2025 Mechanics of Human. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // Dark mode toggle
+    document.getElementById('toggleDarkBtn').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Interactive body parts info
+    const bodyParts = [
+      { id: 'head', text: '🧠 Head — Controls sensory, cognitive, and motor functions.' },
+      { id: 'chest', text: '❤️ Chest — Houses heart and lungs, vital for circulation and respiration.' },
+      { id: 'abdomen', text: '💪 Abdomen — Includes digestive organs and core stability muscles.' },
+      { id: 'leftArm', text: '💪 Left Arm — Facilitates grasping, lifting, and fine movements.' },
+      { id: 'rightArm', text: '💪 Right Arm — Facilitates grasping, lifting, and fine movements.' },
+      { id: 'leftLeg', text: '🏃 Left Leg — Supports locomotion and balance.' },
+      { id: 'rightLeg', text: '🏃 Right Leg — Supports locomotion and balance.' }
+    ];
+
+    const info = document.getElementById('bodyInfo');
+
+    function resetParts() {
+      bodyParts.forEach((part) => {
+        document.getElementById(part.id).setAttribute('fill', 'gray');
+      });
+    }
+
+    bodyParts.forEach((part) => {
+      const el = document.getElementById(part.id);
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetParts();
+        el.setAttribute('fill', 'red');
+        info.textContent = part.text;
+      });
+    });
+
+    document.body.addEventListener('click', () => {
+      resetParts();
+      info.textContent = 'Click on a body part to learn more!';
+    });
+
+    // Demo buttons functionality
+    const demoArea = document.getElementById('demoArea');
+
+    function showDemo(demo) {
+      if (demo === 'leverDemo') {
+        demoArea.textContent =
+          'Lever System Demo:\n\n' +
+          'Imagine the elbow as a lever where the biceps apply force to lift a weight.\n' +
+          'Force (muscle) × Distance (from elbow) = Load (weight) × Load Distance.\n\n' +
+          'This shows how muscles generate torque to move our limbs.';
+      } else if (demo === 'fluidDemo') {
+        demoArea.textContent =
+          'Fluid Dynamics Demo:\n\n' +
+          'Blood flows through vessels similar to water through pipes.\n' +
+          'Pressure differences drive flow, and vessel diameter affects resistance.\n\n' +
+          'Understanding this helps explain blood pressure and circulation.';
+      } else if (demo === 'jointDemo') {
+        demoArea.textContent =
+          'Joint Mechanics Demo:\n\n' +
+          'Synovial joints function like mechanical bearings allowing smooth movement.\n' +
+          'Cartilage reduces friction and ligaments provide stability.\n\n' +
+          'Damage to these can affect motion and cause pain.';
       }
+    }
 
-      function showConcept(concept) {
-        const concepts = {
-          leverage:
-            'The human body uses three classes of levers:\n• Class 1: Neck extension (fulcrum between effort and load)\n• Class 2: Calf raise (load between fulcrum and effort)\n• Class 3: Bicep curl (effort between fulcrum and load)',
-          pump: 'The heart functions as a dual-chamber pump:\n• Left ventricle: High-pressure systemic circulation\n• Right ventricle: Low-pressure pulmonary circulation\n• Valves prevent backflow like check valves in machinery',
-          springs:
-            'Tendons store and release elastic energy:\n• Achilles tendon can store up to 35% of running energy\n• Acts like a biological spring-damper system\n• Reduces metabolic cost of movement',
-          bellows:
-            'The respiratory system works like a bellows:\n• Diaphragm creates pressure differential\n• Elastic recoil provides passive expiration\n• Compliance determines ease of inflation',
-          sensors:
-            'Biological feedback systems:\n• Proprioceptors detect body position\n• Baroreceptors monitor blood pressure\n• Chemoreceptors sense chemical changes\n• All provide real-time system feedback',
-          materials:
-            'Bone is a composite material:\n• Collagen fibers provide tensile strength\n• Calcium phosphate provides compressive strength\n• Hierarchical structure optimizes weight-to-strength ratio',
-        };
+    // Expand category (placeholder, you can implement expand/collapse)
+    function expandCategory(categoryId) {
+      alert('You clicked category: ' + categoryId + '\nFeature to expand or navigate can be implemented.');
+    }
 
-        alert(
-          `${concept.charAt(0).toUpperCase() + concept.slice(1)} Concept:\n\n${
-            concepts[concept]
-          }`
-        );
+    // Newsletter form submission
+    const emailForm = document.getElementById('emailForm');
+    emailForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById('emailInput');
+      if (emailInput.value) {
+        alert(`Thank you for subscribing with ${emailInput.value}!`);
+        emailInput.value = '';
       }
+    });
 
-      function showDemo(demo) {
-        const demoArea = document.getElementById('demoArea');
-        const demos = {
-          lever: `
-                    <div style="text-align: center;">
-                        <h3>🦴 Joint Lever Analysis</h3>
-                        <p>Analyzing the elbow as a Class 3 lever system:</p>
-                        <div style="margin: 20px 0; font-family: monospace; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                            Fulcrum: Elbow joint<br>
-                            Effort: Bicep muscle (5cm from joint)<br>
-                            Load: Weight in hand (35cm from joint)<br>
-                            Mechanical Advantage: 5/35 = 0.14<br>
-                            <strong>Result: Must generate 7x more force than the load!</strong>
-                        </div>
-                    </div>
-                `,
-          flow: `
-                    <div style="text-align: center;">
-                        <h3>❤️ Cardiovascular Flow Dynamics</h3>
-                        <p>Heart pumping simulation:</p>
-                        <div style="margin: 20px 0; font-family: monospace; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                            Cardiac Output = Heart Rate × Stroke Volume<br>
-                            Normal: 70 bpm × 70ml = 4.9 L/min<br>
-                            Systolic Pressure: ~120 mmHg<br>
-                            Diastolic Pressure: ~80 mmHg<br>
-                            <strong>💓 Simulating heartbeat... thump-thump... thump-thump...</strong>
-                        </div>
-                    </div>
-                `,
-          breathing: `
-                    <div style="text-align: center;">
-                        <h3>🫁 Respiratory Mechanics</h3>
-                        <p>Breathing cycle analysis:</p>
-                        <div style="margin: 20px 0; font-family: monospace; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                            Inspiration: Diaphragm contracts → Volume ↑ → Pressure ↓<br>
-                            Expiration: Diaphragm relaxes → Volume ↓ → Pressure ↑<br>
-                            Tidal Volume: ~500ml<br>
-                            Breathing Rate: ~12-16 breaths/min<br>
-                            <strong>🌬️ Inhale... Exhale... Inhale... Exhale...</strong>
-                        </div>
-                    </div>
-                `,
-          gait: `
-                    <div style="text-align: center;">
-                        <h3>🏃 Human Gait Analysis</h3>
-                        <p>Walking mechanics breakdown:</p>
-                        <div style="margin: 20px 0; font-family: monospace; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                            Stance Phase: 60% of gait cycle<br>
-                            Swing Phase: 40% of gait cycle<br>
-                            Double Support: Both feet on ground<br>
-                            Center of Mass: Follows sinusoidal path<br>
-                            <strong>🚶 Step... Step... Step... (Optimized for energy efficiency!)</strong>
-                        </div>
-                    </div>
-                `,
-        };
-
-        demoArea.innerHTML = demos[demo];
-      }
-
-      // Search functionality
-      document
-        .getElementById('searchInput')
-        .addEventListener('input', function (e) {
-          const searchTerm = e.target.value.toLowerCase();
-          if (searchTerm.length > 2) {
-            // Simple search suggestion
-            const suggestions = [
-              'lever systems',
-              'blood flow',
-              'muscle mechanics',
-              'bone structure',
-              'joint movement',
-              'respiratory mechanics',
-            ];
-            const matches = suggestions.filter((s) => s.includes(searchTerm));
-            if (matches.length > 0) {
-              console.log('Search suggestions:', matches);
-            }
-          }
-        });
-
-      // Email collection form
-      document
-        .getElementById('emailForm')
-        .addEventListener('submit', function (e) {
-          e.preventDefault();
-          const email = document.getElementById('emailInput').value;
-          if (email) {
-            // For now, just show success message
-            alert(
-              "Thank you for subscribing! We'll keep you updated on new content and features."
-            );
-            document.getElementById('emailInput').value = '';
-
-            // TODO: Integrate with email service (Mailchimp, ConvertKit, etc.)
-            console.log('Email collected:', email);
-          }
-        });
-
-      // Add some interactive animations
-      setInterval(() => {
-        const cards = document.querySelectorAll('.concept-card');
-        cards.forEach((card, index) => {
-          setTimeout(() => {
-            card.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-              card.style.transform = 'scale(1)';
-            }, 200);
-          }, index * 100);
-        });
-      }, 10000);
-    </script>
-  </body>
+    // Simple search functionality (filter categories by input)
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const categories = document.querySelectorAll('.category-card');
+      categories.forEach((cat) => {
+        const text = cat.textContent.toLowerCase();
+        if (text.includes(query)) {
+          cat.style.display = '';
+        } else {
+          cat.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
 </html>
